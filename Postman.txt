@@ -1,0 +1,131 @@
+From video-class
+
+1) open Postman
+2) collections 
+   -> new 
+   -> collection 
+   -> change name "group_30"
+3) add a request (по умолчанию создается GET; создать можно так же через три точки ... -> add a request; либо правой клавишей мыши и add a request)
+4) заполняем поле Enter request URL :  http://162.55.220.72:5005 
+   -> save 
+   -> send
+  Получаем первый ответ "Hello!!" 
+  200OK  274 ms  160 B
+  (То что мы увидим в ответе на наш запрос, задает backend developer)
+
+5) заполняем поле Enter request URL (разница в /):  http://162.55.220.72:5005/  
+   -> save 
+   -> send
+  Получаем ответ "Hello!!"
+  200OK  274 ms  160 B  
+
+6) правая кнопка мыши New Request 
+   -> Duplicate 
+   -> заполняем поле Enter request URL :  http://162.55.220.72:5005/first 
+   -> save 
+   -> send
+   Получаем ответ : "This is the first responce from server!"
+
+7) правая кнопка мыши New Request Copy 
+   -> Duplicate 
+   -> заполняем поле Enter request URL :  http://162.55.220.72:5005/get_method 
+   -> save 
+   -> send
+   Получаем ответ : "null,
+                     null"
+8) переименуем запросы (как угодно)
+  
+9) правая кнопка мыши New Request Copy2
+   -> Duplicate 
+   -> оставляем:  http://162.55.220.72:5005/get_method 
+   -> save -> во вкладке Params заполняем две строчки (первый столбик) KEY 
+   -> age и ниже name (запрос автоматически изменился)-> затем VALUE две строчки (второй столбик)
+   -> 27 и ниже Valeria 
+   В запросе: http://162.55.220.72:5005/get_method?age=27&name=Valeria
+   -> send
+   Получаем ответ : "Valeria",
+                         "27"
+Обязательно необходимо обращать внимание при заполнении KEY VALUE на то, чтобы не было лишних пробелов, знаков, регистры!
+
+10) правая кнопка мыши New Request Copy 3
+    -> Duplicate 
+    -> меняем метод на POST 
+    -> во вкладке Body выбираем form-data 
+    -> заполняем поле Enter request URL :  http://162.55.220.72:5005/user_info_3
+    -> save ->заполняем колонки KEY (age; name; salary) VALUE ( 27; Valeria; 5000)
+    -> send
+    Получаем ответ...
+
+11) Environments
+    -> + New Environment
+    -> изменяем имя : "group_30"
+    -> в столбце VARIABLE - age
+    -> в столбце CURRENT VALUE - 40
+    -> save
+    -> возвращаемся в Collections
+    -> user_info_3
+    -> в правом верхнем углу "No Environment" меняем на созданное нами "group_30"
+    (Если нажать на глазик, то увидим параметры этого окружения)
+    -> в столбце VALUE - {{age}}
+    -> save
+    -> send
+    Получаем в ответе заданный параметр age из окружения group_30
+
+ 12) меняем вкладку "Body" на "Tests"
+     Справа "SNIPPETS" (в них содержался готовые скрипты)
+     -> Response body: JSON value check
+     -> выносим в начало кусок скрипта: var jsonData = pm.response.json();
+     -> несколькими строками ниже пишем: console.log(jsonData.family)
+     -> save
+     -> send
+     -> снизу слева нажимаем "Console" : {children: [2], u_salary_1_5_year: 20000}
+ 13) исправляем: console.log(jsonData.family.u_salary_1_5_year)
+     -> save
+     -> send
+     -> console: 20000
+ 14) под первой переменной задаем другую
+     var salary_1_5 = jsonData.family.u_salary_1_5_year
+     -> удаляем строки"console.log(jsonData.family.u_salary_1_5_year)" и все ниже
+     -> "SNIPPETS" - Set an environment variable
+ 15) Environments
+     -> group_30
+     -> добавляем salary
+     -> save
+16) Возвращаемся в Collections
+    -> pm.environment.set("salary", salary_1_5 );
+    -> save
+    -> send
+    -> нажимаем на глазик - добавилось значение salary в окружение group_30
+17) add New Request (метод post)
+18) http://162.55.220.72:5005/user_info_2 
+19) меняем имя на user_info_2 
+20) Body 
+    -> form-data
+    -> KEY:   age  salary       name
+    -> VALUE: 40   {{salary}}   Alex
+    -> save
+    -> send
+21) возвращаемся в реквест first
+    -> tests
+    -> SNIPPETS
+    -> Status code : Code is 200 (проверяем, что статус-код полученный от сервера =200)
+       pm.test("Status code is 200", function () {
+    pm.response.to.have.status(200);
+});
+
+    -> save
+    -> send
+    -> (Внизу вкладка)Test Results 
+                      Status code is 200
+    -> Если вручную в скрипте меняем на 300, то получим  FAIL
+       Status code is 200 | AssertionError: expected response to have status code 300 but got 200
+22) для того, чтобы применить скрипт ко всем реквестам, переходим в саму коллекцию
+    -> group_30
+    -> Tests
+    -> SNIPPETS
+    -> Status code : Code is 200
+    -> save
+    -> ...Run collection
+    -> отмечаем галочками необходимые пункты
+    -> справа Run group_30
+ 
