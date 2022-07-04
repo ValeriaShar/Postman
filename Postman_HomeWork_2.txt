@@ -13,44 +13,28 @@ HW_2
   -> New
   -> Homework_2
   -> Add request
-  -> name user_info_2
-  -> POST
-  -> http://162.55.220.72:5005/user_info_2
-  -> Body
-  -> KEY (name    age    salary    weight)
+  -> name get_method
+  -> Params
   -> save
 
 2) Environments
   -> New
   -> Homework_2 (+ставим галочку)
-  -> VARIABLE      (name   age   salary  weight)
-  -> CURRENT VALUE (Mike   30    1800      80  )
+  -> VARIABLE      (name   age   salary  weight     url)
+  -> CURRENT VALUE (Mike   30    1800      80       http://162.55.220.72:5005 )
   -> save
 
 3) Collections
    -> Homework_2
-   -> user_info_2  
+   -> get_method 
    -> No Environment -> Homework_2
-   -> Body
-   -> VALUE  {{name}}   {{age}}  {{salary}}   {{weight}} 
+   -> {{url}}/get_method?name={{name}}&age={{age}}							
    -> save
-   -> send
- 
-4) Environments
-  -> New
-  -> url (+ставим галочку)
-  -> VARIABLE (url)
-  -> CURRENT VALUE (http://162.55.220.72:5005)
-  -> save
- 
-5) Collections
-  -> Homework_2
-  -> Add request
-  -> name  url
-  -> GET
-  -> No Environment -> url
-  -> Enter request URL -> {{url}}/
-  -> save
-  -> send
-  Получаем ответ:  "Hello!!"
+   -> send						
+
+  Получаем ответ:  
+  "[
+    "Mike",
+    "30"
+    ]"
 

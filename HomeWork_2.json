@@ -7,65 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "user_info_2",
-			"event": [
-				{
-					"listen": "test",
-					"script": {
-						"exec": [
-							""
-						],
-						"type": "text/javascript"
-					}
-				}
-			],
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "name",
-							"value": "{{name}}",
-							"type": "text"
-						},
-						{
-							"key": "age",
-							"value": "{{age}}",
-							"type": "text"
-						},
-						{
-							"key": "salary",
-							"value": "{{salary}}",
-							"type": "text"
-						},
-						{
-							"key": "weight",
-							"value": "{{weight}}",
-							"type": "text"
-						}
-					]
-				},
-				"url": {
-					"raw": "http://162.55.220.72:5005/user_info_2",
-					"protocol": "http",
-					"host": [
-						"162",
-						"55",
-						"220",
-						"72"
-					],
-					"port": "5005",
-					"path": [
-						"user_info_2"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "url",
+			"name": "get_method",
 			"event": [
 				{
 					"listen": "test",
@@ -81,12 +23,22 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "{{url}}/",
+					"raw": "{{url}}/get_method?name={{name}}&age={{age}}",
 					"host": [
 						"{{url}}"
 					],
 					"path": [
-						""
+						"get_method"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "{{name}}"
+						},
+						{
+							"key": "age",
+							"value": "{{age}}"
+						}
 					]
 				}
 			},
